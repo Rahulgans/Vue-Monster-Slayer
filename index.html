@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MONSTER SLAYER</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="container-fluid" id="app">
+		<h1 class="text-center" style="color: ghostwhite;">WELCOME TO MONSTER SLAYER</h1>
+		<div class="row">
+			
+			<div class="col mt-3">
+
+				<div class="card p-3">
+					<div class="card-body">
+						<h2 class="text-center">YOU</h2>
+						<div class="health-container">
+							<div class="health-bar" :style="{width:playerHealth + '%' }">{{ playerHealth }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col mt-3">
+				<div class="card p-3">
+					<div class="card-body" :class={specialAttack:isSpecial}>
+						<h2 class="text-center">MONSTER</h2>
+						<div class="health-container">
+							<div class="health-bar" :style="{width:monsterHealth + '%' }">{{ monsterHealth }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-5" v-if="!gameRunning">
+			<div class="col-8 offset-2">
+				<div class="card p-3">
+					<div class="card-body text-center">
+						<button class="btn btn-lg" v-on:click="startGameAction()">Let's Slay !!!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-5" v-if="gameRunning">	
+			<div class="col-8 offset-2 game-options">		
+				<button type="button" class="btn btn-lg btn-primary" v-on:click="attackAction()">Attack</button>
+				<button type="button" class="btn btn-lg btn-secondary" v-on:click="specialAction()">Special Attack</button>
+				<button type="button" class="btn btn-lg btn-success" v-on:click="healAction()">Heal</button>
+				<button type="button" class="btn btn-lg btn-danger" v-on:click="giveupAction()">Giveup</button>
+			</div>
+			<transition name='fadeAlert'>
+			<div class="col-8 offset-2 mt-3" v-if='alert'>
+				<div class="alert alert-danger">
+					<p>No more special powers</p>
+				</div>
+			</div>
+		</transition>
+		<transition name='fadeAlert'>
+			<div class="col-8 offset-2 mt-3" v-if='healAlert'>
+				<div class="alert alert-danger">
+					<p>Sorry, Magic lotion over !!!</p>
+				</div>
+			</div>
+		</transition>
+		</div>
+
+		<div class="row mt-5 logs" v-if="turns.length > 0">
+			<div class="col-8 offset-2">
+				<ul class="my-3" style="list-style-type: none;">
+					<li v-for='turn in turns' :class="{'turn-player':turn.isPlayer,'turn-monster': !turn.isPlayer}">
+						{{  turn.text  }}
+
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
