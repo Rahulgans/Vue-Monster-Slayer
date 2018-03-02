@@ -1,3 +1,3 @@
 # Vue-Monster-Slayer
 
-`` Thanks [Max](https://github.com/mschwarzmueller)
+ Thanks [Max](https://github.com/mschwarzmueller)
